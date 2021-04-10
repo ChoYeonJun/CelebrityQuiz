@@ -13,12 +13,15 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="true"
         android:allowBackup="true">
-
-        <activity android:name="com.example.celebrityquiz.MainActivity">
+        <activity
+            android:name="com.example.celebrityquiz.firebaseAccess.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="com.example.celebrityquiz.MainActivity">
         </activity>
 
         <activity
@@ -28,7 +31,18 @@
 
         <activity
             android:name="com.example.celebrityquiz.SolutionActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+            android:parentActivityName="com.example.celebrityquiz.MainActivity"
+            >
+        </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.firebaseAccess.RegisterActivity"
+            >
+        </activity>
+        <activity
+            android:name="com.example.celebrityquiz.firebaseAccess.LoginActivity"
+            >
+
         </activity>
 
     </application>

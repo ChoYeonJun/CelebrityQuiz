@@ -43,13 +43,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/celebrityImage">
 
+
         <RadioButton
-            android:id="@+id/radioButtonTwo"
+            android:id="@+id/radioButtonOne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <RadioButton
-            android:id="@+id/radioButtonOne"
+            android:id="@+id/radioButtonTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

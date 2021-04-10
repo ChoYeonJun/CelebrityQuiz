@@ -51,7 +51,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         // Hide toolbar
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        Objects.requireNonNull(getSupportActionBar()).hide();
 
         // Define Activity views
         questionView = findViewById(R.id.celebrityQuestion);
