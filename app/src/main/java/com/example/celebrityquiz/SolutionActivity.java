@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.celebrityquiz.firebaseAccess.RankActivity;
+import com.example.celebrityquiz.firebaseAccess.Record;
 import com.example.celebrityquiz.firebaseAccess.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,24 +24,42 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class SolutionActivity extends AppCompatActivity{
 
     ImageButton buttonRank;
     FirebaseAuth auth;
-    DatabaseReference reference;
+    DatabaseReference mDatabase;
+    String userId;
+
+    int elapsedTime;
+    int scoreValue;
+
+    ArrayList<Record> recordList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        assert firebaseUser != null;
+        userId = firebaseUser.getUid();
+
+        dataCheck();
         // Define Navigation
 //        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -49,7 +69,8 @@ public class SolutionActivity extends AppCompatActivity{
         }
 
         // Interface instance to get values from QuizActivity
-        int scoreValue = getIntent().getIntExtra("score", 0);
+        scoreValue = getIntent().getIntExtra("score", 0);
+        elapsedTime = getIntent().getIntExtra("elapsedTime",30);
         List<Quiz> quizList = (List<Quiz>) getIntent().getSerializableExtra("quizList");
 
         // Set view and display scoreValue
@@ -72,50 +93,20 @@ public class SolutionActivity extends AppCompatActivity{
         //rank button def
         buttonRank = findViewById(R.id.buttonRank);
 
-        auth = FirebaseAuth.getInstance();
 
     }
 
-    private void record(final String username, String email, String password){
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(com.example.celebrityquiz.SolutionActivity.this, "record on Ranking is failed", Toast.LENGTH_SHORT).show();
-                            Log.d("record exception", "onComplete: Failed=" + task.getException().getMessage());
-                        }else{
-                            FirebaseUser firebaseUser = auth.getCurrentUser();
-                            assert firebaseUser != null;
-                            String userid = firebaseUser.getUid();
 
-                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id", userid);
-                            hashMap.put("username", username);
-                            hashMap.put("imageURL", "default");
-
-//                            reference.child("")
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-//                                        Intent intent = new Intent(com.example.celebrityquiz.firebaseAccess.RankActivity.this, MainActivity.class);
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                        startActivity(intent);
-//                                        finish();
-                                    }else{
-//                                        Toast.makeText(com.example.celebrityquiz.firebaseAccess.RankActivity.this, "reference error ", Toast.LENGTH_SHORT).show();
-//                                        Log.d("reference exception", "onComplete: Failed=" + task.getException().getMessage());
-                                    }
-                                }
-                            });
-
-                        }
-                    }
-                });
-    }
+//    private void record(final String userId, String username, String elapsedTime, String totalQuizNUm){
+//        Record record = new Record(username, totalQuizNUm,elapsedTime);
+//        Map<String, Object> recordValues = record.toMap();
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/Records/" + userId, recordValues);
+//
+//        mDatabase.updateChildren(childUpdates);
+//    }
 
     // Function to display well done image if user gets all correct | also settings for total value
     public void displayWellDone(int score) {
@@ -127,9 +118,58 @@ public class SolutionActivity extends AppCompatActivity{
         // display well done image if user gets all correct
         if (score == 5) imageView.setVisibility(View.VISIBLE);
     }
+    private void collectRecords(Map<String,Object> records) {
 
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : records.entrySet()){
+            //Get user map
+            Map singleRecords = (Map) entry.getValue();
+//            Log.d("firebase", (Map)entry.getValue());
+            //Get phone field and append to list
+            Record record = new Record((String)singleRecords.get("username"), (String)singleRecords.get("totalQuizNum"), (String)singleRecords.get("elapsedTime"));
+//            elapseTimes.add((Long) singleRecords.get("elapsedTime"));
+//            totalQuizNum.add((Long) singleRecords.get("totalQuizNum"));
+//            username.add((Long) singleRecords.get("username"));
+            recordList.add(record);
+      }
+        for(Record record: recordList){
+            Log.d("firebase", record.getUsername());
+            Log.d("firebase", record.getElapsedTime());
+            Log.d("firebase", record.getTotalQuizNum());
+        }
+
+    }
+
+    private void dataCheck(){
+        recordList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Records");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        collectRecords((Map<String,Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+    }
     public void rankButtonOnClick(View view) {
 
+        Intent intent = new Intent(com.example.celebrityquiz.SolutionActivity.this, RankActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Collections.sort(recordList, new Record.RecordElapsedTimeComparator());
+        Collections.sort(recordList, new Record.RecordQuizNumComparator());
+        ArrayList<Record> list = new ArrayList<Record>(recordList);
+        intent.putExtra("recordList", list);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 

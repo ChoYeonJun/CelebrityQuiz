@@ -3,16 +3,27 @@ package com.example.celebrityquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.celebrityquiz.firebaseAccess.Record;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,7 +34,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
@@ -44,12 +57,23 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonNext;
     private TextView textTime;
     private CountDownTimer countDownTimer;
+    FirebaseAuth auth;
+    DatabaseReference mDatabase;
+
+    ImageButton buttonRank;
+    String userId;
+    int elapsedTime;
+    int scoreValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.activity_quiz);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        assert firebaseUser != null;
+        userId = firebaseUser.getUid();
         // Hide toolbar
 //        Objects.requireNonNull(getSupportActionBar()).hide();
 
@@ -153,14 +177,71 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 stopTimer();
                 Intent i = new Intent(QuizActivity.this, SolutionActivity.class);
+
+                i.putExtra("elapsedTime", elapsedTime);
                 i.putExtra("score", getScore());
                 // Change List to ArrayList to accommodate subList
                 ArrayList<Quiz> list = new ArrayList<>(quizList);
                 i.putExtra("quizList", list);
                 i.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP );
+
+                mDatabase.child("Records").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase record", "Error getting data", task.getException());
+                        }
+                        else {
+                            Log.d("firebase record", String.valueOf(task.getResult().getValue()));
+                            String value = String.valueOf(task.getResult().getValue());
+                            value = value.replace("{", "");
+                            value = value.replace("}", "");
+                            String[] values = value.split(", ");
+                            Log.d("firebase record", values[0].split("=")[1]);
+                            Log.d("firebase record", values[1].split("=")[1]);
+                            Log.d("firebase record", values[2].split("=")[1]);
+//                    Log.d("firebase", values[3].split("=")[1]);
+
+                            String totalQuizNum = values[0].split("=")[1];
+                            String elapsedTime =  values[1].split("=")[1];
+                            String username  =  values[2].split("=")[1];
+
+                            CalculateData(username, elapsedTime, totalQuizNum);
+                        }
+                    }
+                });
+//        totalQuizNum = Integer.toString(10);
+//        elapsedTime = values[2].split("=")[1];
+//        username = values[3].split("=")[1];
+//        Log.d("firebase", totalQuizNum + elapsedTime + username);
+
                 startActivity(i);
             }
         });
+    }
+    private void CalculateData(String username, String elapsedTime, String totalQuizNum){
+        int QuizNum = Integer.parseInt(totalQuizNum);
+        QuizNum += getScore();
+        Log.d("firebase Calculate", Integer.valueOf(getScore()).toString());
+        totalQuizNum = Integer.valueOf(QuizNum).toString();
+        Log.d("firebase Calculate", totalQuizNum);
+
+        int time = Integer.parseInt(elapsedTime) ;
+        time += (seconds - Integer.parseInt((String) textTime.getText()));
+        elapsedTime = Integer.valueOf(time).toString();
+        Log.d("firebase Calculate", elapsedTime);
+
+        record(userId,username, elapsedTime, totalQuizNum);
+    }
+
+    private void record(final String userId, String username, String elapsedTime, String totalQuizNUm){
+        Record record = new Record(username, totalQuizNUm,elapsedTime);
+        Map<String, Object> recordValues = record.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/Records/" + userId, recordValues);
+        Log.d("firebase record", "Records updated");
+        mDatabase.updateChildren(childUpdates);
     }
 
     // Start countdown. OnFinish, start Solution Activity
@@ -176,6 +257,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onFinish() {
                 Intent i = new Intent(QuizActivity.this, SolutionActivity.class);
                 i.putExtra("score", getScore());
+                i.putExtra("elapsedTime", seconds);
                 // Change List to ArrayList to accommodate subList
                 ArrayList<Quiz> list = new ArrayList<>(quizList);
                 i.putExtra("quizList", list);

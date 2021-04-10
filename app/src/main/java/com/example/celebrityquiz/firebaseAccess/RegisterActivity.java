@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
                             HashMap<String, String> recordHashMap = new HashMap<>();
-                            recordHashMap.put("id", userid);
+//                            recordHashMap.put("id", userid);
                             recordHashMap.put("username", username);
                             recordHashMap.put("elapsedTime", "0");
                             recordHashMap.put("totalQuizNum", "0");
@@ -99,8 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         Intent intent = new Intent(com.example.celebrityquiz.firebaseAccess.RegisterActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
+//                                        startActivity(intent);
+//                                        finish();
                                     }else{
                                         Toast.makeText(com.example.celebrityquiz.firebaseAccess.RegisterActivity.this, "reference error ", Toast.LENGTH_SHORT).show();
                                         Log.d("reference exception", "onComplete: Failed=" + task.getException().getMessage());
