@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.celebrityquiz.firebaseAccess.RankActivity;
 import com.example.celebrityquiz.firebaseAccess.Record;
 import com.example.celebrityquiz.firebaseAccess.User;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,7 +30,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -133,18 +144,38 @@ public class SolutionActivity extends AppCompatActivity{
 //            username.add((Long) singleRecords.get("username"));
             recordList.add(record);
       }
-        for(Record record: recordList){
-            Log.d("firebase", record.getUsername());
-            Log.d("firebase", record.getElapsedTime());
-            Log.d("firebase", record.getTotalQuizNum());
-        }
 
+        saveRecordAsJson();
+//        for(Record record: recordList){
+//            Log.d("firebase", record.getUsername());
+//            Log.d("firebase", record.getElapsedTime());
+//            Log.d("firebase", record.getTotalQuizNum());
+//        }
+    }
+
+    private void saveRecordAsJson() {
+        String fileName = "record.json";
+        Gson gson = new Gson();
+        File directory = this.getFilesDir();
+        File file = new File(directory, fileName);
+//        String jsonRecord = gson.toJson(recordList);
+
+        try {
+            Writer writer = new FileWriter(file);
+            gson.toJson(recordList, writer);
+
+            writer.close();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        Log.d("firebase", gson.toString());
     }
 
     private void dataCheck(){
-        recordList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Records");
-        ref.addListenerForSingleValueEvent(
+    recordList = new ArrayList<>();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Records");
+    ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -163,8 +194,7 @@ public class SolutionActivity extends AppCompatActivity{
         Intent intent = new Intent(com.example.celebrityquiz.SolutionActivity.this, RankActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        Collections.sort(recordList, new Record.RecordElapsedTimeComparator());
-        Collections.sort(recordList, new Record.RecordQuizNumComparator());
+
         ArrayList<Record> list = new ArrayList<Record>(recordList);
         intent.putExtra("recordList", list);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -174,3 +204,6 @@ public class SolutionActivity extends AppCompatActivity{
 
 
 }
+
+
+

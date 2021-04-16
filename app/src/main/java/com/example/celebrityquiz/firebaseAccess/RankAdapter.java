@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.celebrityquiz.R;
 
@@ -51,6 +52,7 @@ public class RankAdapter extends RecyclerView.Adapter {
             elapsedTime.setText(("Elapsed Times: " + record.elapsedTime));
 
         }
+
     }
     @Override
     public int getItemCount() {
