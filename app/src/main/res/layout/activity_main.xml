@@ -57,19 +57,37 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/buttonUpdate"
-            android:layout_width="350dp"
+            android:id="@+id/Korea"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="56dp"
             android:background="@drawable/button_rounded"
             android:elevation="2dp"
             android:gravity="center"
-            android:onClick="onButtonUpdate"
-            android:text="@string/update"
+            android:onClick="onButtonUpdate1"
+            android:text="@string/koreaTxt"
             android:textAllCaps="false"
+            app:layout_constraintHorizontal_bias="0.184"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/levelBackground" />
+
+        <Button
+            android:id="@+id/foreign"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_rounded"
+            android:elevation="2dp"
+            android:onClick="onButtonUpdate2"
+            android:text="@string/otherTxt"
+            android:textAllCaps="false"
+            app:layout_constraintHorizontal_bias="0.815"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarDownload"
+            tools:ignore="MissingConstraints" />
+
 
         <Button
             android:id="@+id/buttonStartQuiz"
@@ -85,7 +103,7 @@
             android:textAllCaps="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonUpdate" />
+            app:layout_constraintTop_toBottomOf="@+id/Korea" />
 
         <ImageView
             android:id="@+id/levelBackground"

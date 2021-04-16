@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles/Utility -->
+    <string name="app_name">名人比赛游戏</string>
+    <string name="username">用户名</string>
+    <string name="back" />
+    <string name="settings" />
+
+    <string name="loginBtt">登录</string>
+    <string name="registerBtt">报名</string>
+    <string name="loginTxt">登录</string>
+    <string name="logoutTxt">登出</string>
+    <string name="emailTxt">电子邮件</string>
+    <string name="pwTxt">密码</string>
+    <string name="resultsTxt">得分结果</string>
+    <string name="rankTxt">游戏排名</string>
+    <string name="makeaccountTxt">创建一个新账户</string>
+
+    <string name="settingsTitle">游戏难度</string>
+    <string name="level1">阶段一</string>
+    <string name="level2">第二步</string>
+    <string name="level3">第三步</string>
+
+    <string name="timeTitle">计时器设定</string>
+    <string name="seconds30">30秒</string>
+    <string name="seconds60">60秒</string>
+    <string name="seconds90">90秒</string>
+
+    <string name="scoreContent">你的分数</string>
+    <string name="scoreHeader">分数</string>
+
+
+    <string name="textTime">30</string>
+    <string name="previous">到上一个</string>
+    <string name="next">到下一个</string>
+    <string name="submit">提交</string>
+    <string name="koreaTxt">韩语模式</string>
+    <string name="otherTxt">世界模式</string>
+    <string name="startQuiz">开始测验</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles/Utility -->
+    <string name="app_name">芸能人フィットゲーム</string>
+    <string name="username">ユーザー名</string>
+    <string name="back" />
+    <string name="settings" />
+
+    <string name="loginBtt">ログイン</string>
+    <string name="registerBtt">会員登録</string>
+    <string name="loginTxt">ログイン</string>
+    <string name="logoutTxt">ログアウト</string>
+    <string name="emailTxt">メール</string>
+    <string name="pwTxt">パスワード</string>
+    <string name="resultsTxt">スコア結果</string>
+    <string name="rankTxt">ゲームのランキング</string>
+    <string name="makeaccountTxt">新しいアカウントを作成する</string>
+
+    <string name="settingsTitle">ゲームの難易度</string>
+    <string name="level1">ステップ1</string>
+    <string name="level2">ステップ2</string>
+    <string name="level3">ステップ3</string>
+
+    <string name="timeTitle">タイマーを設定してください!!</string>
+    <string name="seconds30">30秒</string>
+    <string name="seconds60">60秒</string>
+    <string name="seconds90">90秒</string>
+
+    <string name="scoreContent">あなたのスコアは</string>
+    <string name="scoreHeader">スコア</string>
+
+
+    <string name="textTime">30</string>
+    <string name="previous">前に</string>
+    <string name="next">次に</string>
+    <string name="submit">提出</string>
+    <string name="koreaTxt">韓国のモード</string>
+    <string name="otherTxt">世界のモード</string>
+    <string name="startQuiz">クイズを開始</string>
+</resources>

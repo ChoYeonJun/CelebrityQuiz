@@ -1,5 +1,6 @@
 package com.example.celebrityquiz;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +59,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonPrevious;
     private Button buttonNext;
     private TextView textTime;
-    private CountDownTimer countDownTimer;
+    private static CountDownTimer countDownTimer;
     //kim add
     private String hintbox1[] = {"Blackstar","Grammy Legend Award","King of Pop","WWE","China"};
     private String hintbox2[] = {"Our Song","Alipay","Los Angeles Lakers","Numver.007","George VI"};
@@ -70,7 +72,7 @@ public class QuizActivity extends AppCompatActivity {
     String userId;
     int elapsedTime;
     int scoreValue;
-
+    final int STOP_TIME_REQUEST = 101;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
@@ -176,6 +178,8 @@ public class QuizActivity extends AppCompatActivity {
         // See function
         startTimer();
 
+
+
         // When user submit quiz, stop time and start Solution Activity
         Button buttonSubmit = findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +229,15 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        stopTimer();
+        Log.d("CDA", "onBackPressed Called");
+        Intent setIntent = new Intent(this,StartActivity.class);
+        setIntent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP );
+        startActivity(setIntent);
+    }
     private void CalculateData(String username, String elapsedTime, String totalQuizNum){
         int QuizNum = Integer.parseInt(totalQuizNum);
         QuizNum += getScore();
@@ -250,6 +263,7 @@ public class QuizActivity extends AppCompatActivity {
         mDatabase.updateChildren(childUpdates);
     }
 
+   
     // Start countdown. OnFinish, start Solution Activity
     public void startTimer() {
         textTime.setText(String.valueOf(seconds));
@@ -270,13 +284,14 @@ public class QuizActivity extends AppCompatActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(i);
             }
+
         }.start();
     }
 
     // Cancel timer to prevent countDown in background
     // If not defined, Solution Activity will start even when user goes back to
     // Main Activity because Quiz Activity doesn't get destroyed instantly
-    public void stopTimer() {
+    public static void stopTimer() {
         countDownTimer.cancel();
     }
 

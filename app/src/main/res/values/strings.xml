@@ -2,8 +2,20 @@
 <resources>
     <!-- Titles/Utility -->
     <string name="app_name">Celebrity Quiz</string>
+    <string name="username">Username</string>
     <string name="back" />
     <string name="settings" />
+
+    <string name="loginBtt">login</string>
+    <string name="registerBtt">register</string>
+    <string name="loginTxt">Login</string>
+    <string name="logoutTxt">Logout</string>
+
+    <string name="emailTxt">Email</string>
+    <string name="pwTxt">Password</string>
+    <string name="resultsTxt">Results</string>
+    <string name="rankTxt">Rank</string>
+    <string name="makeaccountTxt">Create a new account</string>
 
     <string name="settingsTitle">Level of Difficulty</string>
     <string name="level1">Level One</string>
@@ -22,6 +34,8 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="submit">Submit</string>
-    <string name="update">Update from Internet</string>
+    <string name="koreaTxt">Only Korea</string>
+    <string name="otherTxt">Any Countries</string>
     <string name="startQuiz">Start Quiz</string>
+
 </resources>

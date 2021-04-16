@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +67,26 @@ public class SolutionActivity extends AppCompatActivity{
         setContentView(R.layout.activity_solution);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        SearchView searchView;
+        searchView = findViewById(R.id.search);
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                Intent myintent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://ko.m.wikipedia.org/wiki/"+s));
+                startActivity(myintent);
+                Toast.makeText(SolutionActivity.this,s+" 검색중",Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         auth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = auth.getCurrentUser();
@@ -122,13 +145,23 @@ public class SolutionActivity extends AppCompatActivity{
     // Function to display well done image if user gets all correct | also settings for total value
     public void displayWellDone(int score) {
 
+        MediaPlayer player= MediaPlayer.create(this,R.raw.applause);
+        MediaPlayer player2= MediaPlayer.create(this,R.raw.failed);
+
         // Set view for well done image
         ImageView imageView = findViewById(R.id.wellDoneImage);
         imageView.setVisibility(View.INVISIBLE); // set image invisible
 
         // display well done image if user gets all correct
-        if (score == 5) imageView.setVisibility(View.VISIBLE);
+        if (score == 5) {
+            imageView.setVisibility(View.VISIBLE);
+            player.start();
+        }
+
+        else
+            player2.start();
     }
+
     private void collectRecords(Map<String,Object> records) {
         for (Map.Entry<String, Object> entry : records.entrySet()){
             Map singleRecords = (Map) entry.getValue();

@@ -62,10 +62,16 @@
 
 
             </androidx.appcompat.widget.Toolbar>
-
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:iconifiedByDefault="true"
+                android:queryHint="나무위키 검색"/>
 
 
         </com.google.android.material.appbar.AppBarLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

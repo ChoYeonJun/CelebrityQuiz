@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         progressBarDownload.setMax(100);
 
         // Define Update and Starting buttons
-        Button buttonUpdate = findViewById(R.id.buttonUpdate);
+//        Button buttonUpdate = findViewById(R.id.buttonUpdate);
         buttonStartQuiz = findViewById(R.id.buttonStartQuiz);
-        buttonUpdate.setEnabled(true);
+//        buttonUpdate.setEnabled(true);
         buttonStartQuiz.setEnabled(false);
         downloadTask = null; // Always initialize task to null
 
@@ -166,10 +166,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void onButtonUpdate(View view) {
+    public void onButtonUpdate1(View view) {
         if(downloadTask == null) {
             // Import data from internet
-            String jsonUrl = "https://api.jsonbin.io/b/5e8f60bb172eb6438960f731";
+            String jsonUrl = "https://api.jsonbin.io/b/6078e62a5b165e19f62105bd/1";
+            downloadTask = new DownloadTask(downloadListener, this);
+            downloadTask.execute(jsonUrl);
+        }
+    }
+    public void onButtonUpdate2(View view) {
+        if(downloadTask == null) {
+            // Import data from internet
+            String jsonUrl = "https://api.jsonbin.io/b/5e8f60bb172eb6438960f731";  //해외
             downloadTask = new DownloadTask(downloadListener, this);
             downloadTask.execute(jsonUrl);
         }
