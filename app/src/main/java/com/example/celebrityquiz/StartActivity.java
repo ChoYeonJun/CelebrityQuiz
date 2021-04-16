@@ -88,7 +88,6 @@ public class StartActivity extends MainActivity {
                     Glide.with(StartActivity.this).load(user.getImageURL()).into(profile_image);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -96,18 +95,6 @@ public class StartActivity extends MainActivity {
         });
     }
 
-    public void rankButtonOnClick(View view) {
-
-        Intent intent = new Intent(com.example.celebrityquiz.StartActivity.this, RankActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-//        ArrayList<Record> list = new ArrayList<Record>(recordList);
-//        intent.putExtra("recordList", list);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -122,7 +109,6 @@ public class StartActivity extends MainActivity {
                 finish();
                 return true;
         }
-
         return false;
     }
 

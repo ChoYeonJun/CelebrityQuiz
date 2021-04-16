@@ -43,9 +43,6 @@ public class RankAdapter extends RecyclerView.Adapter {
             for (int i = 0; i < recordList.size(); i++)
                 System.out.println(recordList.get(i).toString());
             // 오름차순 정렬
-
-
-
             username.setText(record.username);
             sequence.setText(Integer.valueOf(position+1).toString());
             totalQuizNum.setText("Right Quiz Counts: " + record.totalQuizNum);

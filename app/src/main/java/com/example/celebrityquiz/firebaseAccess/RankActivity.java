@@ -40,18 +40,14 @@ public class RankActivity extends AppCompatActivity {
 
 //        List<Record> recordList = (List<Record>) getIntent().getSerializableExtra("recordList");
 //
-        loadCurrentGame();
+        loadRecord();
         RankAdapter rankAdapter = new RankAdapter(this, recordList);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rankAdapter);
-
-
     }
 
-    public void loadCurrentGame() {
-        String pathName = this.getFilesDir().getPath();
-        File fullName = new File(pathName + File.separator );
+    public void loadRecord() {
         String string = null;
         try {
             FileInputStream fileInputStream = openFileInput("record.json");
@@ -66,7 +62,6 @@ public class RankActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Gson gson = new Gson();
         Type type = new TypeToken<List<Record>>(){}.getType();
         List<Record> list = gson.fromJson(string, type);
@@ -75,7 +70,4 @@ public class RankActivity extends AppCompatActivity {
         Collections.sort(recordList, new Record.RecordElapsedTimeComparator());
         Collections.sort(recordList, new Record.RecordQuizNumComparator());
     }
-
-
-
 }

@@ -130,29 +130,14 @@ public class SolutionActivity extends AppCompatActivity{
         if (score == 5) imageView.setVisibility(View.VISIBLE);
     }
     private void collectRecords(Map<String,Object> records) {
-
-
-        //iterate through each user, ignoring their UID
         for (Map.Entry<String, Object> entry : records.entrySet()){
-            //Get user map
             Map singleRecords = (Map) entry.getValue();
-//            Log.d("firebase", (Map)entry.getValue());
-            //Get phone field and append to list
-            Record record = new Record((String)singleRecords.get("username"), (String)singleRecords.get("totalQuizNum"), (String)singleRecords.get("elapsedTime"));
-//            elapseTimes.add((Long) singleRecords.get("elapsedTime"));
-//            totalQuizNum.add((Long) singleRecords.get("totalQuizNum"));
-//            username.add((Long) singleRecords.get("username"));
+            Record record = new Record((String)singleRecords.get("username"),
+                    (String)singleRecords.get("totalQuizNum"), (String)singleRecords.get("elapsedTime"));
             recordList.add(record);
       }
-
         saveRecordAsJson();
-//        for(Record record: recordList){
-//            Log.d("firebase", record.getUsername());
-//            Log.d("firebase", record.getElapsedTime());
-//            Log.d("firebase", record.getTotalQuizNum());
-//        }
     }
-
     private void saveRecordAsJson() {
         String fileName = "record.json";
         Gson gson = new Gson();
@@ -182,13 +167,13 @@ public class SolutionActivity extends AppCompatActivity{
                         //Get map of users in datasnapshot
                         collectRecords((Map<String,Object>) dataSnapshot.getValue());
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         //handle databaseError
                     }
                 });
     }
+
     public void rankButtonOnClick(View view) {
 
         Intent intent = new Intent(com.example.celebrityquiz.SolutionActivity.this, RankActivity.class);
