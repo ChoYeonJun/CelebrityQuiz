@@ -50,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_password = password.getText().toString();
 
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty((txt_password))) {
-                    Toast.makeText(com.example.celebrityquiz.firebaseAccess.LoginActivity.this, "All files are required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(com.example.celebrityquiz.firebaseAccess.LoginActivity.this,
+                            "All files are required", Toast.LENGTH_SHORT).show();
                 }else{
                     auth.signInWithEmailAndPassword(txt_email, txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -62,7 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     }else{
-                                        Toast.makeText(com.example.celebrityquiz.firebaseAccess.LoginActivity.this, "Authentication failed!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(com.example.celebrityquiz.firebaseAccess.LoginActivity.this,
+                                                "Authentication failed!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
