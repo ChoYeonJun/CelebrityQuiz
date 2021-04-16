@@ -37,5 +37,7 @@
     <string name="koreaTxt">Only Korea</string>
     <string name="otherTxt">Any Countries</string>
     <string name="startQuiz">Start Quiz</string>
+    <string name="setting">Setting</string>
+    <string name="Rank">Rank</string>
 
 </resources>

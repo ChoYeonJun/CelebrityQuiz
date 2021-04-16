@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="#FF8331"
-        android:text="Setting"
+        android:text="@string/setting"
         android:textColorLink="#FF5722"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#FF8331"
-        android:text="Rank"
+        android:text="@string/Rank"
         android:layout_marginTop="10dp"
 
         android:textColorLink="#FF5722"

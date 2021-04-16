@@ -133,17 +133,5 @@
         app:layout_constraintEnd_toEndOf="@+id/scoreViewBackground"
         app:layout_constraintStart_toStartOf="@id/scoreViewBackground"/>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#ED7636"
-        android:onClick="hintClick"
-        android:text="Hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/celebrityQuestion" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

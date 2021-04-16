@@ -37,4 +37,6 @@
     <string name="koreaTxt">韓国のモード</string>
     <string name="otherTxt">世界のモード</string>
     <string name="startQuiz">クイズを開始</string>
+    <string name="setting">設定</string>
+    <string name="Rank">ランク</string>
 </resources>

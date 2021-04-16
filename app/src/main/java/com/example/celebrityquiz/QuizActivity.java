@@ -61,9 +61,9 @@ public class QuizActivity extends AppCompatActivity {
     private TextView textTime;
     private static CountDownTimer countDownTimer;
     //kim add
-    private String hintbox1[] = {"Blackstar","Grammy Legend Award","King of Pop","WWE","China"};
-    private String hintbox2[] = {"Our Song","Alipay","Los Angeles Lakers","Numver.007","George VI"};
-    private String hintbox3[] = {"Science","Rocket Man","South African","NoShow","Infinity"};
+//    private String hintbox1[] = {"Blackstar","Grammy Legend Award","King of Pop","WWE","China"};
+//    private String hintbox2[] = {"Our Song","Alipay","Los Angeles Lakers","Numver.007","George VI"};
+//    private String hintbox3[] = {"Science","Rocket Man","South African","NoShow","Infinity"};
     private int life = 2;
     FirebaseAuth auth;
     DatabaseReference mDatabase;
@@ -263,7 +263,7 @@ public class QuizActivity extends AppCompatActivity {
         mDatabase.updateChildren(childUpdates);
     }
 
-   
+
     // Start countdown. OnFinish, start Solution Activity
     public void startTimer() {
         textTime.setText(String.valueOf(seconds));
@@ -391,17 +391,17 @@ public class QuizActivity extends AppCompatActivity {
 
     //힌트
 
-    public void hintClick(View view) {
-        Intent intent = getIntent();
-        int level = intent.getIntExtra("level", 0);
-        if(level == 1) {
-            Toast.makeText(getApplicationContext(), hintbox1[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
-        }
-        else if(level == 2) {
-            Toast.makeText(getApplicationContext(), hintbox2[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(getApplicationContext(), hintbox3[indexCurrentQuestion], Toast.LENGTH_SHORT).show();//indexCurrentQustion 현재 순번
-        }
-    }
+//    public void hintClick(View view) {
+//        Intent intent = getIntent();
+//        int level = intent.getIntExtra("level", 0);
+//        if(level == 1) {
+//            Toast.makeText(getApplicationContext(), hintbox1[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
+//        }
+//        else if(level == 2) {
+//            Toast.makeText(getApplicationContext(), hintbox2[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            Toast.makeText(getApplicationContext(), hintbox3[indexCurrentQuestion], Toast.LENGTH_SHORT).show();//indexCurrentQustion 현재 순번
+//        }
+//    }
 }

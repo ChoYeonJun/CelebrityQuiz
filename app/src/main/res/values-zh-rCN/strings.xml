@@ -37,4 +37,6 @@
     <string name="koreaTxt">韩语模式</string>
     <string name="otherTxt">世界模式</string>
     <string name="startQuiz">开始测验</string>
+    <string name="setting">环境</string>
+    <string name="Rank">秩</string>
 </resources>

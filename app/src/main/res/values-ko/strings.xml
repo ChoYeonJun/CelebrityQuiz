@@ -36,4 +36,6 @@
     <string name="koreaTxt">국내 모드</string>
     <string name="otherTxt">해외 모드</string>
     <string name="startQuiz">퀴즈 시작</string>
+    <string name="setting">설정</string>
+    <string name="Rank">순위</string>
 </resources>
