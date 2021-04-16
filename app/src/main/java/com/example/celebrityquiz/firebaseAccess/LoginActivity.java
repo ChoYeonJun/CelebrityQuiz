@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.celebrityquiz.MainActivity;
 import com.example.celebrityquiz.R;
+import com.example.celebrityquiz.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        Intent intent = new Intent(com.example.celebrityquiz.firebaseAccess.LoginActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(com.example.celebrityquiz.firebaseAccess.LoginActivity.this, StartActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,6 +58,11 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonNext;
     private TextView textTime;
     private CountDownTimer countDownTimer;
+    //kim add
+    private String hintbox1[] = {"Blackstar","Grammy Legend Award","King of Pop","WWE","China"};
+    private String hintbox2[] = {"Our Song","Alipay","Los Angeles Lakers","Numver.007","George VI"};
+    private String hintbox3[] = {"Science","Rocket Man","South African","NoShow","Infinity"};
+    private int life = 2;
     FirebaseAuth auth;
     DatabaseReference mDatabase;
 
@@ -310,11 +316,18 @@ public class QuizActivity extends AppCompatActivity {
 
     // Pre-define new views before setting next question as current question, for index > list.size()
     public void onButtonNext(View view) {
+        Quiz currentQuestion = quizList.get(indexCurrentQuestion);
+        if(currentQuestion.userAnswer != currentQuestion.correctAnswer) life -= 1;
+        if(life == 0){
+            Toast.makeText(getApplicationContext(), "failed ", Toast.LENGTH_SHORT).show();
+            countDownTimer.cancel();
+            finish();
+        }
         if(indexCurrentQuestion != (quizList.size() - 1)) {
             indexCurrentQuestion++;
+            currentQuestion = quizList.get(indexCurrentQuestion);
             if(indexCurrentQuestion == (quizList.size() - 1)) buttonNext.setEnabled(false);
             if(indexCurrentQuestion != 0) buttonPrevious.setEnabled(true);
-            Quiz currentQuestion = quizList.get(indexCurrentQuestion);
             currentQuestionView(currentQuestion);
 
             radioGroup = findViewById(R.id.celebrityOption);
@@ -358,5 +371,22 @@ public class QuizActivity extends AppCompatActivity {
             if (quizList.get(i).userAnswer == quizList.get(i).correctAnswer) score++;
         }
         return score;
+    }
+
+
+    //힌트
+
+    public void hintClick(View view) {
+        Intent intent = getIntent();
+        int level = intent.getIntExtra("level", 0);
+        if(level == 1) {
+            Toast.makeText(getApplicationContext(), hintbox1[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
+        }
+        else if(level == 2) {
+            Toast.makeText(getApplicationContext(), hintbox2[indexCurrentQuestion], Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), hintbox3[indexCurrentQuestion], Toast.LENGTH_SHORT).show();//indexCurrentQustion 현재 순번
+        }
     }
 }

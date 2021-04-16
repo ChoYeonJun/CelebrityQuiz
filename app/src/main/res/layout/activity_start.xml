@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    tools:context=".firebaseAccess.StartActivity">
+    tools:context=".StartActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
-        android:gravity="center"
+        android:id="@+id/textView"
+        android:layout_width="244dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="150dp"
         android:text="@string/app_name"
         android:textColor="@color/colorAccent"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/login"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_Start"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
-        android:text="login"
-        android:textColor="@color/colorPrimary" />
+        android:layout_marginTop="128dp"
+        android:backgroundTint="#FF8331"
+        android:elevation="2dp"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/startQuiz"
+        android:textAllCaps="false"
+        android:textColorLink="#FF5722"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/register"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_setting"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/colorAccent"
-        android:textColor="@color/colorPrimary"
-        android:text="register" />
-</LinearLayout>
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#FF8331"
+        android:text="Setting"
+        android:textColorLink="#FF5722"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

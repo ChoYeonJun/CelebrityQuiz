@@ -14,7 +14,7 @@
         android:fullBackupContent="true"
         android:allowBackup="true">
         <activity
-            android:name="com.example.celebrityquiz.firebaseAccess.StartActivity">
+            android:name="com.example.celebrityquiz.firebaseAccess.InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,13 +41,18 @@
         </activity>
         <activity
             android:name="com.example.celebrityquiz.firebaseAccess.LoginActivity"
-            > </activity>
+            >
+        </activity>
         <activity
             android:name="com.example.celebrityquiz.firebaseAccess.RankActivity"
             >
-
         </activity>
 
+        <activity
+            android:name="com.example.celebrityquiz.StartActivity"
+            >
+        </activity>
+        <service android:name=".MusicService" />
     </application>
 
 </manifest>

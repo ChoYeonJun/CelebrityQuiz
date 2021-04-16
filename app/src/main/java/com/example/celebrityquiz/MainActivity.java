@@ -12,9 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.celebrityquiz.firebaseAccess.StartActivity;
+import com.example.celebrityquiz.firebaseAccess.InitActivity;
 import com.example.celebrityquiz.firebaseAccess.User;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton radioButton90;
     private ProgressBar progressBarDownload;
     private Button buttonStartQuiz;
+    //kim add
+    private Button start, stop;
+
     public int level;
     public int seconds;
     CircleImageView profile_image;
@@ -52,6 +53,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        start = (Button)findViewById(R.id.start);
+        stop = (Button)findViewById(R.id.stop);
+
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(new Intent(getApplicationContext(),MusicService.class));
+            }
+        });
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService(new Intent(getApplicationContext(),MusicService.class));
+            }
+        });
 
         // Define Level views
         radioButtonLevelOne = findViewById(R.id.radioButtonLevelOne);
@@ -167,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();;
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
+                startActivity(new Intent(MainActivity.this, InitActivity.class));
                 finish();
                 return true;
         }

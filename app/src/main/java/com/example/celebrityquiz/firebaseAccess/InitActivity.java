@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.celebrityquiz.MainActivity;
 import com.example.celebrityquiz.R;
+import com.example.celebrityquiz.StartActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-public class StartActivity extends AppCompatActivity {
+public class InitActivity extends AppCompatActivity {
 
     Button login, register;
 
@@ -25,7 +26,7 @@ public class StartActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(firebaseUser != null){
-            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            Intent intent = new Intent(InitActivity.this, StartActivity.class);
             startActivity(intent);
             finish();
         }
@@ -35,7 +36,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_init);
 
 
         login = findViewById(R.id.login);
@@ -44,14 +45,14 @@ public class StartActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                startActivity(new Intent(StartActivity.this, LoginActivity.class));
+                startActivity(new Intent(InitActivity.this, LoginActivity.class));
             }
         });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this, RegisterActivity.class));
+                startActivity(new Intent(InitActivity.this, RegisterActivity.class));
             }
         });
     }
